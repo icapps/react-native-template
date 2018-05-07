@@ -1,4 +1,4 @@
-package com._OLLIE_NAME_SNAKE_CASE_;
+package com._ollie_name_snake_case_;
 
 import android.app.Application;
 

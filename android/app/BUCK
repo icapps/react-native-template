@@ -45,12 +45,12 @@ android_library(
 
 android_build_config(
     name = "build_config",
-    package = "com._OLLIE_NAME_SNAKE_CASE_",
+    package = "com._ollie_name_snake_case_",
 )
 
 android_resource(
     name = "res",
-    package = "com._OLLIE_NAME_SNAKE_CASE_",
+    package = "com._ollie_name_snake_case_",
     res = "src/main/res",
 )
 

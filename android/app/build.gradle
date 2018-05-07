@@ -98,7 +98,7 @@ android {
     buildToolsVersion "23.0.1"
 
     defaultConfig {
-        applicationId "com._OLLIE_NAME_SNAKE_CASE_"
+        applicationId "com._ollie_name_snake_case_"
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 1
