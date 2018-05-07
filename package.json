@@ -4,11 +4,22 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "jest",
+    "run-android": "react-native run-android --appId be.keytradebank.phone.debug",
+    "run-ios": "react-native run-ios",
+    "build:android-beta": "(cd android && ENVFILE=.env.beta ./gradlew clean app:assemblebeta)",
+    "install:android": "adb install -r android/app/build/outputs/apk/beta/app-beta.apk",
+    "deploy:android-beta": "yarn run build:android-beta && yarn run install:android",
+    "build:ios": "react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ios/main.jsbundle --assets-dest ios",
+    "clean": "yarn run clean:build && yarn run clean:npm && yarn run clean:kill-packager && yarn run clean:start-packager",
+    "clean:build": "rm -rf ./ios/build",
+    "clean:npm": "rm -rf ./node_modules && yarn",
+    "clean:start-packager": "react-native start --reset-cache",
+    "clean:kill-packager": "lsof -n -i4TCP:8081 | sed '1 d' | awk '{print $2}' | xargs kill -9"
   },
   "dependencies": {
-    "react": "16.0.0",
-    "react-native": "0.50.1",
+    "react": "16.3.1",
+    "react-native": "0.55.3",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
     "redux-devtools-extension": "^2.13.2",
