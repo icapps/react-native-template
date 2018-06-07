@@ -7,6 +7,7 @@
     "test": "jest --watch"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "react": "16.0.0",
     "react-native": "0.50.1",
     "react-redux": "^5.0.6",
@@ -28,8 +29,12 @@
     "react-test-renderer": "16.0.0"
   },
   "jest": {
-    "setupFiles": [ "./setupTests.js" ],
+    "setupFiles": [
+      "./setupTests.js"
+    ],
     "preset": "react-native",
-    "snapshotSerializers": [ "enzyme-to-json/serializer" ]
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
   }
 }
