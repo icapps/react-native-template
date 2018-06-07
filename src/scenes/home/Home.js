@@ -9,8 +9,8 @@ import styles from './styles';
 class Home extends React.Component {
   login = () => {
     this.props.login({
-      email    : 'reactnative@icapps.com',
-      password : 'reactnative',
+      email: 'reactnative@icapps.com',
+      password: 'reactnative',
     });
   };
   render() {
@@ -33,27 +33,27 @@ class Home extends React.Component {
 }
 
 Home.propTypes = {
-  login       : PropTypes.func.isRequired,
-  isLoading   : PropTypes.bool.isRequired,
-  isLoggedIn  : PropTypes.bool.isRequired,
-  serverError : PropTypes.string,
-  token       : PropTypes.string,
+  login: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
+  serverError: PropTypes.string,
+  token: PropTypes.string,
 };
 
 Home.defaultProps = {
-  serverError : null,
-  token       : null,
+  serverError: null,
+  token: null,
 };
 
 const mapStateToProps = state => ({
-  isLoading   : state.login.isLoading,
-  isLoggedIn  : state.login.isLoggedIn,
-  serverError : state.login.serverError,
-  token       : state.login.token,
+  isLoading: state.login.isLoading,
+  isLoggedIn: state.login.isLoggedIn,
+  serverError: state.login.serverError,
+  token: state.login.token,
 });
 
 const mapDispatchToProps = dispatch => ({
-  login : bindActionCreators(loginActions.login, dispatch),
+  login: bindActionCreators(loginActions.login, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
