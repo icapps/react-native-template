@@ -1,97 +1,78 @@
-const API_URL = 'https://reqres.in/api/';
+import axios from 'axios';
+import APP_API_HOST from '../../appConstants';
 
 class Network {
-  static isFormData(body) {
-    return body instanceof FormData;
+  static getUrl(route) {
+    if (route.indexOf('http://') === 0 || route.indexOf('https://') === 0 || route.indexOf('www.') === 0) {
+      return route;
+    }
+    return `${APP_API_HOST}${route}`;
   }
 
-  static basicHeaders(extraHeaders, formData = false) {
+  static basicHeaders() {
     const headers = {};
 
-    if (!formData) {
-      headers['content-type'] = 'application/json';
-    }
+    headers['Content-Type'] = 'application/json';
+    headers['Accept'] = 'application/json';
 
-    return { ...headers, ...extraHeaders };
+    return headers;
   }
 
   static errorHandler(err) {
-    if (err.errors && Array.isArray(err.errors)) {
-      throw new Error({
-        errors: err.errors,
-        meta: JSON.stringify(err),
-      });
+    if (error.response) {
+      throw {
+        errors: (error.response.data && error.response.data.errors) || [ { code: '0', status: 500, title: 'Unknown error', meta: error.response } ],
+      };
+    } else if (error.request) {
+      // The request was made but no response was received
+      throw {
+        errors: [ { code: '0', status: 500, title: 'Unknown error', meta: error.request } ],
+      };
     } else {
-      throw new Error({
-        errors: [{ code: '0', status: 500, title: 'Unknown error' }],
-        meta: JSON.stringify(err),
-      });
+      // Something happened in setting up the request that triggered an Error
+      throw {
+        errors: [ { code: '0', status: 500, title: 'Unknown error', meta: error.message } ],
+      };
     }
   }
 
-  static async get(route, extraHeaders = {}) {
+  static async get(route) {
     try {
-      const headers = this.basicHeaders(extraHeaders);
-      const result = await fetch(`${API_URL}${route}`, { method: 'GET', headers });
-      const jsonResult = await result.json();
-
-      if (result.ok) {
-        return jsonResult;
-      }
-      // Something wrong, so throw the result and let the catch handle the error stuff
-      throw jsonResult;
+      const headers = this.basicHeaders();
+      const result = await axios.get(this.getUrl(route), { headers });
+      return result.data;
     } catch (err) {
-      return this.errorHandler(err);
+      this.errorHandler(err);
     }
   }
 
-  static async put(route, body = {}, extraHeaders = {}) {
+  static async put(route, body = {}) {
     try {
-      const isFormData = this.isFormData(body);
-      const headers = this.basicHeaders(extraHeaders, isFormData);
-      const result = await fetch(`${API_URL}${route}`, { method: 'PUT', headers, body: isFormData ? body : JSON.stringify(body) });
-      const jsonResult = await result.json();
-
-      if (result.ok) {
-        return jsonResult;
-      }
-      // Something wrong, so throw the result and let the catch handle the error stuff
-      throw jsonResult;
+      const headers = this.basicHeaders();
+      const result = await axios.put(this.getUrl(route), body, { headers });
+      return result.data;
     } catch (err) {
-      return this.errorHandler(err);
+      this.errorHandler(err);
     }
   }
 
-  static async post(route, body = {}, extraHeaders = {}) {
+  static async post(route, body = {}) {
     try {
-      const isFormData = this.isFormData(body);
-      const headers = this.basicHeaders(extraHeaders, isFormData);
-      const result = await fetch(`${API_URL}${route}`, { method: 'POST', headers, body: isFormData ? body : JSON.stringify(body) });
-      const jsonResult = await result.json();
-
-      if (result.ok) {
-        return jsonResult || true;
-      }
-      // Something wrong, so throw the result and let the catch handle the error stuff
-      throw jsonResult;
+      const headers = this.basicHeaders();
+      const result = await axios.post(this.getUrl(route), body, { headers });
+      return result.data;
     } catch (err) {
-      return this.errorHandler(err);
+      this.errorHandler(err);
     }
   }
 
   static async delete(route) {
     try {
       const headers = this.basicHeaders();
-      const result = await fetch(`${API_URL}${route}`, { method: 'DELETE', headers });
-      // Status code 204 -> successfull delete
-      if (result.status === 204 || result.status === 200) {
-        return true;
-      }
-      // Something wrong, so throw the result and let the catch handle the error stuff
-      const jsonResult = await result.json();
-      throw jsonResult;
+      const result = await axios.delete(this.getUrl(route), { headers });
+      return result.data || true;
     } catch (err) {
-      return this.errorHandler(err);
+      this.errorHandler(err);
     }
   }
 }
