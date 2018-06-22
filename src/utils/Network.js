@@ -18,7 +18,7 @@ class Network {
     return headers;
   }
 
-  static errorHandler(err) {
+  static errorHandler(error) {
     if (error.response) {
       throw {
         errors: (error.response.data && error.response.data.errors) || [ { code: '0', status: 500, title: 'Unknown error', meta: error.response } ],
