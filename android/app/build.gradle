@@ -98,7 +98,7 @@ android {
     buildToolsVersion "23.0.1"
 
     defaultConfig {
-        applicationId "com._OLLIE_NAME_SNAKE_CASE_"
+        applicationId "com.reactnative_boilerplate"
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 1

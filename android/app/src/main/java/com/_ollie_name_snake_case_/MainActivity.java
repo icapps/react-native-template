@@ -1,4 +1,4 @@
-package com._OLLIE_NAME_SNAKE_CASE_;
+package com.reactnative_boilerplate;
 
 import com.facebook.react.ReactActivity;
 
@@ -10,6 +10,6 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "_OLLIE_NAME_SNAKE_CASE_";
+        return "reactnative_boilerplate";
     }
 }

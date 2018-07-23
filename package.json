@@ -1,10 +1,21 @@
 {
-  "name": "_OLLIE_NAME_SNAKE_CASE_",
+  "name": "reactnative_boilerplate",
   "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest --watch"
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch",
+    "lint": "eslint -c .eslintrc --ext .js src",
+    "lint:fix": "eslint -c .eslintrc --ext .js src --fix",
+    "validate": "yarn lint && yarn test",
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "clean": "yarn run clean:build && yarn run clean:npm && yarn run clean:start-packager",
+    "clean:build": "rm -rf ./ios/build",
+    "clean:npm": "rm -rf ./node_modules && yarn",
+    "clean:start-packager": "react-native start --reset-cache"
   },
   "dependencies": {
     "axios": "^0.18.0",

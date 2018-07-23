@@ -1,4 +1,4 @@
-package com._OLLIE_NAME_SNAKE_CASE_;
+package com.reactnative_boilerplate;
 
 import android.app.Application;
 
